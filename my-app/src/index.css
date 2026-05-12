@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme {
+  --color-secondary-fixed: #d6e3ff;
+  --color-tertiary-container: #b75b00;
+  --color-tertiary-fixed: #ffdcc6;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-tint: #005ac2;
+  --color-on-secondary-fixed-variant: #39475f;
+  --color-on-primary-fixed-variant: #004395;
+  --color-on-surface-variant: #424754;
+  --color-primary-fixed: #d8e2ff;
+  --color-surface-container-highest: #e1e2ec;
+  --color-surface-container-low: #f2f3fd;
+  --color-secondary-fixed-dim: #b9c7e4;
+  --color-on-primary-fixed: #001a42;
+  --color-on-background: #191b23;
+  --color-on-secondary: #ffffff;
+  --color-outline: #727785;
+  --color-on-tertiary-fixed-variant: #723600;
+  --color-on-surface: #191b23;
+  --color-primary-container: #2170e4;
+  --color-on-secondary-fixed: #0d1c32;
+  --color-on-error: #ffffff;
+  --color-surface-variant: #e1e2ec;
+  --color-surface: #f9f9ff;
+  --color-outline-variant: #c2c6d6;
+  --color-on-primary-container: #fefcff;
+  --color-secondary: #515f78;
+  --color-inverse-on-surface: #eff0fa;
+  --color-surface-container: #ecedf7;
+  --color-background: #f9f9ff;
+  --color-on-primary: #ffffff;
+  --color-primary-fixed-dim: #adc6ff;
+  --color-on-tertiary-fixed: #311400;
+  --color-tertiary: #924700;
+  --color-on-secondary-container: #55637d;
+  --color-on-tertiary-container: #fffbff;
+  --color-inverse-primary: #adc6ff;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-fixed-dim: #ffb786;
+  --color-surface-bright: #f9f9ff;
+  --color-inverse-surface: #2e3038;
+  --color-secondary-container: #d2e0fe;
+  --color-surface-container-high: #e6e7f2;
+  --color-on-error-container: #93000a;
+  --color-surface-dim: #d8d9e3;
+  --color-error-container: #ffdad6;
+  --color-blue-primary: #0058be;
+  --color-error: #ba1a1a;
+
+  --radius: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+
+  --spacing-stack-md: 1rem;
+  --spacing-stack-lg: 2rem;
+  --spacing-container-max: 1280px;
+  --spacing-gutter: 1.5rem;
+  --spacing-margin-desktop: 2rem;
+  --spacing-margin-mobile: 1rem;
+  --spacing-stack-sm: 0.5rem;
+
+  --font-family-display-sm: Inter;
+  --font-family-body-lg: Inter;
+  --font-family-headline-lg-mobile: Inter;
+  --font-family-headline-lg: Inter;
+  --font-family-label-md: Inter;
+  --font-family-title-lg: Inter;
+  --font-family-label-sm: Inter;
+  --font-family-display-lg: Inter;
+  --font-family-body-md: Inter;
+}
