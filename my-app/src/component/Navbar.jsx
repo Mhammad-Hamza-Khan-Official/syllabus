@@ -1,9 +1,17 @@
-export default function Navbar() {
+import { NavLink } from "react-router-dom";
+
+
+
+export default function Navbar(props) {
+  const {position = "fixed"} = props
   const logoSrc = ""; // Add logo image path here when available
   return (
-    <div>
-      <div className="flex justify-center py-stack-sm fixed z-50 bg-on-primary left-0 right-0 px-8">
-        <div className="w-container-max flex items-center justify-between py-2">
+    <div >
+      <div className="h-[70px] bg-on-primary flex items-center justify-center">
+
+
+      <div className={`flex justify-center py-stack-sm ${position}  z-50 w-screen top-0 bg-on-primary/80 left-0 right-0 px-8`}>
+        <div className="w-container-max flex items-center justify-between py-2 ">
 
         <div className="logo flex text-primary">
           {logoSrc && <img src={logoSrc} alt="" />}
@@ -17,11 +25,15 @@ export default function Navbar() {
             <li className="cursor-pointer hover:text-blue-primary">FAQ</li>
           </ul>
         </div>
+        <NavLink to="/login">
+
         <button className="bg-blue-primary text-sm text-on-primary-container  py-stack-sm rounded-full font-medium px-3 cursor-pointer font-label-md">
           Get Started
         </button>
+        </NavLink>
         </div>
       </div>
+            </div>
     </div>
   );
 }

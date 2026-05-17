@@ -1,24 +1,20 @@
-import Navbar from "./component/Navbar"
-import Hero from "./component/Hero"
-import RatingStrip from "./component/RatingStrip";
-import Feature from "./component/Feature"
-import Subjects from "./component/Subjects"
-import SuccessStories from "./component/SuccessStories";
-import Faqs from "./component/Faqs";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LangingPage from "./MainComponent/LangingPage";
+import Login from "./MainComponent/Login";
+import NotFound from "./MainComponent/NotFound";
+import Registration from "./MainComponent/Registration";
 
 
 function App() {
   return (
-    <div className="">
-      <Navbar/>
-      <Hero />
-      <RatingStrip/>
-      <Feature/>
-      <Subjects/>
-      <SuccessStories/>
-      <Faqs/>
-    </div> 
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<LangingPage/>}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/registration" element={<Registration/>}/>
+        <Route path="*" element={<NotFound/>}/>
+      </Routes>
+    </BrowserRouter>
   )
 }
 

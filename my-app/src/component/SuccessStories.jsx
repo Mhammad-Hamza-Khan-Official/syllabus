@@ -2,11 +2,11 @@ export default function SuccessStories() {
   return (
     <div className="bg-surface flex justify-center pt-24 pb-18">
       <div className="py-8  md:w-container-max px-8">
-        <h1 className="text-4xl font-medium text-center my-8">
+        <h1 className="text-4xl font-bold text-center my-8 mb-13">
           Success Stories
         </h1>
         {/* Card Container */}
-        <div className=" grid grid-cols-1 md:grid-cols-2  gap-10">
+        <div className=" grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2  gap-10">
           {/* card */}
           <div className="p-10 bg-on-secondary shadow-xl rounded-xl flex flex-col gap-7 relative">
             <div className="flex justify-between">

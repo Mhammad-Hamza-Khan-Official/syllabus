@@ -1,7 +1,7 @@
 export default function Faqs() {
   return (
     <div className="bg-surface-container-low py-20">
-      <h1 className="font-medium text-4xl text-center py-8">
+      <h1 className="font-bold text-4xl text-center py-8 mb-3">
         Frequently Asked Questions
       </h1>
       <div className="flex flex-col justify-center items-center gap-3">
@@ -33,7 +33,7 @@ export default function Faqs() {
             The test primarily covers Mathematics, Physics, English, and Intelligence Quotient (IQ).
           </p>
         </div>
-
+      
       </div>
     </div>
   );
