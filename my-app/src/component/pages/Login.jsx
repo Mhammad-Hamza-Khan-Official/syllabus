@@ -1,6 +1,6 @@
 import { useState } from "react";
+import LoginSubFooter from "../common/LoginSubFooter";
 import { NavLink } from "react-router-dom";
-import LoginSubFooter from "../component/LoginSubFooter";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -13,25 +13,22 @@ export default function Login() {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]:  value 
+      [name]: value,
     }));
-
-    
   };
 
-  const  onSubmit = (e)=>{
-    e.preventDefault()
-    console.log(formData)
-  }
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
 
   return (
     <div>
       <section className="bg-surface-container-highest">
         <NavLink to={"/"}>
-
-        <div className="flex gap-2 absolute items-center font-medium  cursor-pointer top-2 left-2 active:text-blue-primary">
-          <p>Go to Home</p>
-        </div>
+          <div className="flex gap-2 absolute items-center font-medium  cursor-pointer top-2 left-2 active:text-blue-primary">
+            <p>Go to Home</p>
+          </div>
         </NavLink>
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto  lg:py-0">
           <div
@@ -50,7 +47,7 @@ export default function Login() {
                 </h1>
                 <p>Access your premium education partner</p>
               </div>
-              <form className="space-y-4 md:space-y-6 " action="">
+              <form className="space-y-4 md:space-y-6 ">
                 {/* Email */}
                 <div>
                   <label
@@ -64,7 +61,7 @@ export default function Login() {
                       mail
                     </span>
                     <input
-                      className="w-full pl-10 pr-4 py-3 bg-transparent  border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none font-body-md text-body-md text-on-surface "
+                      className="w-full pl-10 pr-4 py-3 bg-transparent border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none font-body-md text-body-md text-on-surface "
                       id="email"
                       placeholder="name@example.com"
                       type="email"
@@ -113,16 +110,15 @@ export default function Login() {
                         aria-describedby="remember"
                         type="checkbox"
                         className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                        required=""
-                      
-                      onChange={(e)=>{
-                        const {checked} = e.target
-                        setFormData((prev)=>({
-                          ...prev,
-                          rememberMeBtn:checked
-                        }))
-                      }}
-                      name="rememberMeBtn"
+                        required
+                        onChange={(e) => {
+                          const { checked } = e.target;
+                          setFormData((prev) => ({
+                            ...prev,
+                            rememberMeBtn: checked,
+                          }));
+                        }}
+                        name="rememberMeBtn"
                       />
                     </div>
                     <div className="ml-3 text-sm">
@@ -150,18 +146,17 @@ export default function Login() {
                 </button>
 
                 <div className="relative flex items-center py-4">
-                  <div className="flex-grow border-t "></div>
-                  <span className="flex-shrink mx-4 font-label-sm  text-md uppercase tracking-wider">
+                  <div className="grow border-t"></div>
+                  <span className="shrink-0 mx-4 font-label-sm text-md uppercase tracking-wider">
                     Or continue with
                   </span>
-                  <div className="flex-grow border-t "></div>
+                  <div className="grow border-t"></div>
                 </div>
                 <button
                   type="button"
-                  
                   className="w-full flex items-center justify-center gap-3 active:scale-95 transition-all cursor-pointer focus:ring-2 focus:ring-primary-300 font-medium rounded-lg text-lg px-5 py-3 outline-1"
                 >
-                  <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
                     <path
                       d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                       fill="#4285F4"
@@ -195,7 +190,7 @@ export default function Login() {
           </div>
         </div>
 
-      <LoginSubFooter/>
+        <LoginSubFooter />
       </section>
     </div>
   );

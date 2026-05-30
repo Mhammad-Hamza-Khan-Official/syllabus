@@ -7,7 +7,7 @@ export default function Navbar(props) {
   const logoSrc = ""; // Add logo image path here when available
   return (
     <div >
-      <div className="h-[70px] bg-on-primary flex items-center justify-center">
+      <div className="h-18 bg-on-primary flex items-center justify-center">
 
 
       <div className={`flex justify-center py-stack-sm ${position}  z-50 w-screen top-0 bg-on-primary/80 left-0 right-0 px-8`}>

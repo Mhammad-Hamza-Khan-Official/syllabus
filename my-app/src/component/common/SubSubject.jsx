@@ -12,8 +12,8 @@ export default function SubSubject(props) {
             </span>
             <h3 className="md:text-3xl text-2xl font-medium capitalize">{subject}</h3>
             {/* progress bar */}
-            <div class="w-[90%]  rounded-full  bg-surface-container-low ">
-              <div class={`bg-blue-primary h-2 rounded-full `} style={{width:`${level}%`}}></div>
+            <div className="w-[90%] rounded-full bg-surface-container-low">
+              <div className={`bg-blue-primary h-2 rounded-full`} style={{ width: `${level}%` }}></div>
             </div>
             <p className="text-black/85 md:text-sm text-xs capitalize">{question}</p>
           </div>

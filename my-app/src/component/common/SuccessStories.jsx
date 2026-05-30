@@ -15,7 +15,7 @@ export default function SuccessStories() {
                 <img
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBAXQ5Z_ylYrhwxGCT9MQIrHoengbVxq4P1g&s"
                   alt=""
-                  className="rounded-full w-[64px]"
+                  className="rounded-full w-15"
                 />
                 <div className="flex flex-col ">
                   <div className="font-medium text-xl">Ahmed Khan</div>
@@ -25,8 +25,8 @@ export default function SuccessStories() {
                 </div>
               </div>
               <span
-                class="material-symbols-outlined text-surface-container-high text-8xl absolute top-1 right-1 "
-                style={{ fontSize: "78px"}}
+                className="material-symbols-outlined text-surface-container-high text-8xl absolute top-1 right-1"
+                style={{ fontSize: "78px" }}
               >
                 format_quote
               </span>
@@ -45,7 +45,7 @@ export default function SuccessStories() {
                 <img
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBAXQ5Z_ylYrhwxGCT9MQIrHoengbVxq4P1g&s"
                   alt=""
-                  className="rounded-full w-[64px]"
+                  className="rounded-full w-15"
                 />
                 <div className="flex flex-col ">
                   <div className="font-medium text-xl">Ahmed Khan</div>
@@ -55,7 +55,7 @@ export default function SuccessStories() {
                 </div>
               </div>
               <span
-                class="material-symbols-outlined text-surface-container-high text-8xl absolute top-1 right-1 "
+                className="material-symbols-outlined text-surface-container-high text-8xl absolute top-1 right-1"
                 style={{ fontSize: "78px" }}
               >
                 format_quote

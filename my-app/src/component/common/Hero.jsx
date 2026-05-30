@@ -1,9 +1,9 @@
-import heroImg from "../assets/hero.png";
+import heroImg from "../../assets/hero.png";
 export default function Hero() {
   return (
     <>
       <div
-        className={`bg-on-background text-white flex justify-center align-center h-[100vh]    py-24 px-8`}
+        className={`bg-on-background text-white flex justify-center align-center h-screen py-24 px-8`}
       >
         <div className="md:w-container-max  grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 items-center gap-5">
           <div className="flex items-center flex-col gap-4 text-center md:text-left">
@@ -27,7 +27,7 @@ export default function Hero() {
             <img
               src={heroImg}
               alt="img"
-              className="rounded-3xl h-[230px] md:h-[400px]  w-full object-cover"
+              className="rounded-3xl h-57 md:h-100  w-full object-cover"
             />
           </div>
         </div>
