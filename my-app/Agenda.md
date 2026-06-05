@@ -279,7 +279,7 @@ Text:
 ## Mobile
 - Bottom navbar
 - Swipe questions
-- Full-screen quiz UI
+- Full-screen quiz UI 
 
 ---
 

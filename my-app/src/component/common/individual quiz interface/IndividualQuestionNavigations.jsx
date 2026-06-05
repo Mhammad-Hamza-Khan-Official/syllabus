@@ -1,137 +1,75 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useReducer, useState } from "react";
+import { useContext, useEffect } from "react";
+import individualQuizBoxContext from "../../context/individualQuizBoxContext";
 
-export default function IndividualQuestionNavigations(props) {
-  const { questionNum = 100 } = props;
+export default function IndividualQuestionNavigations() {
+  const {
+    state,
+    dispatch,
+    totalNumberOfQuestions,
+    typeOfQuestionRender,
+    setTypeOfQuestionRender,
+    nestedArrConverter,
+    QuestionArr,
+    setSortingBtnState,
+    sortingBtnState
+  } = useContext(individualQuizBoxContext);
 
-  const NotAttempted = [];
-  for (let index = 1; index <= questionNum; index++) {
-    NotAttempted.push(index);
+
+
+const { currentQuestion, attempted, current } = state;
+const { viewCurrent ,viewAttempted} = sortingBtnState;
+
+useEffect(() => {
+  if (!Array.isArray(QuestionArr) || QuestionArr.length === 0) return;
+  const currentObj = QuestionArr[currentQuestion];
+  if (!currentObj) return;
+
+  const currentQuestionId = currentObj.questionId;
+
+  // avoid dispatch if already current or already attempted
+  if (!current.includes(currentQuestionId) && !attempted.includes(currentQuestionId)) {
+    dispatch({ type: 'current', id: currentQuestionId });
   }
-  const [state, dispatch] = useReducer(reducer, {
-    page: 1,
-    direction: 1,
-    current: [],
-    attempted: [],
-    marked: [],
-    notAttempted: NotAttempted,
-    attemptedNum: 0,
-    markedNum: 0,
-    notAttemptedNum: questionNum,
-    allQuestionNum: questionNum,
-  });
 
-  function reducer(state, action) {
-    switch (action.type) {
-      //page navigation
-      case "forward":
-        return {
-          ...state,
-          page: state.page + 1,
-          direction: 1,
-        };
+  //For sorting
 
-      case "backward":
-        return {
-          ...state,
-          page: state.page - 1,
-          direction: -1,
-        };
-      case "reset":
-        return {
-          ...state,
-          page: 1,
-        };
-      // for sorting btns
-      case "attempted":
-        console.log(state.attempted.length);
-        return {
-          ...state,
-          attempted: [...state.attempted, action.id],
-          notAttempted: state.notAttempted.filter((e) => {
-            return e !== action.id;
-          }),
-          attemptedNum: state.attempted.length + 1,
-          notAttemptedNum: state.notAttempted.length - 1,
-        };
-      case "current":
-        return {
-          ...state,
-          current: [action.id],
-        };
-      case "marked":
-        return {
-          ...state,
-          marked: [...state.marked, action.id],
-          notAttemptedNum: state.notAttempted.length ,
-          markedNum: state.marked.length + 1,
-        };
+  function newRender(renderValue) {
+    const newRender = nestedArrConverter(renderValue, true);
 
-      default:
-        return state;
+    console.log("Type of question :",(typeOfQuestionRender))
+    console.log("Json :",JSON.stringify(typeOfQuestionRender))
+    console.log("Type of question new :",(newRender))
+    console.log("Json new :",JSON.stringify(newRender))
+
+    // avoid re-setting identical render to prevent extra renders
+    if (JSON.stringify(typeOfQuestionRender) !== JSON.stringify(newRender)) {
+      setTypeOfQuestionRender(newRender);
+      dispatch({ type: 'reset' });
     }
   }
+  
+  if(viewCurrent){
+    newRender(current)
+  } else if(viewAttempted){
+    console.log("Attemted Render")
+    newRender(attempted)
 
-  const [typeOfQuestionRender, setTypeOfQuestionRender] = useState(
-    nestedArrConverter(questionNum),
-  );
-
-  function nestedArrConverter(
-    totalNumberOfQuestionsORarray = 0,
-    isArr = false,
-  ) {
-    const onePageQuestions = 10;
-    if (isArr) {
-      const totalIds = totalNumberOfQuestionsORarray.length;
-      const numberOfPages = Math.ceil(totalIds / onePageQuestions);
-
-      let nestedArr = [];
-      for (let index = 0; index < numberOfPages; index++) {
-        nestedArr.push([]);
-      }
-
-      let num = 0;
-
-      for (let index = 0; index < totalIds; index++) {
-        nestedArr[num].push(totalNumberOfQuestionsORarray[index]);
-        console.log(totalNumberOfQuestionsORarray[index]);
-        if (nestedArr[num].length === 10) {
-          num++;
-        }
-      }
-      console.log(nestedArr);
-      return {
-        nestedArr,
-        numberOfPages,
-        totalIds,
-      };
-    } else {
-      const totalIds = totalNumberOfQuestionsORarray;
-      const numberOfPages = Math.ceil(totalIds / onePageQuestions);
-
-      let nestedArr = [];
-
-      for (let index = 1; index <= numberOfPages; index++) {
-        nestedArr.push([]);
-      }
-
-      let num = 0;
-
-      for (let index = 1; index <= totalIds; index++) {
-        nestedArr[num].push(index);
-
-        if (nestedArr[num].length === 10) {
-          num++;
-        }
-      }
-
-      return {
-        nestedArr,
-        numberOfPages,
-        totalIds,
-      };
-    }
   }
+
+
+}, [
+  QuestionArr,
+  currentQuestion,
+  attempted,
+  current,
+  dispatch,
+  viewCurrent,
+  viewAttempted,
+  nestedArrConverter,
+  setTypeOfQuestionRender,
+  typeOfQuestionRender,
+]);
 
   return (
     <div className="flex flex-col justify-between items-center h-screen">
@@ -231,33 +169,51 @@ export default function IndividualQuestionNavigations(props) {
           <button
             disabled={state.page === 1}
             className="
-          w-10 h-10 rounded-full
+          py-1
+          w-4
+          rounded-md
           bg-surface-container
           hover:scale-110
           disabled:opacity-40
           transition-all
+          cursor-pointer
+          active:border flex justify-center items-center
           "
             onClick={() => dispatch({ type: "backward" })}
           >
-            &lt;
+            <span
+              className="material-symbols-outlined"
+              data-icon="chevron_left"
+            >
+              chevron_left
+            </span>
           </button>
 
-          <span className="text-lg font-semibold min-w-8 text-center">
+          <span className="text-lg font-semibold min-w-10 text-center">
             {state.page < 10 ? `0${state.page}` : state.page}
           </span>
 
           <button
             disabled={state.page === typeOfQuestionRender.numberOfPages}
             className="
-          w-10 h-10 rounded-full
+          py-1
+          w-4
+          rounded-md
           bg-surface-container
           hover:scale-110
           disabled:opacity-40
           transition-all
+          cursor-pointer
+          active:border flex justify-center items-center
           "
             onClick={() => dispatch({ type: "forward" })}
           >
-            &gt;
+            <span
+              className="material-symbols-outlined"
+              data-icon="chevron_right"
+            >
+              chevron_right
+            </span>
           </button>
         </div>
         {/* sorting btns */}
@@ -267,7 +223,14 @@ export default function IndividualQuestionNavigations(props) {
             className="flex items-center gap-3 text-blue-primary font-bold border-l-4 border-blue-primary pl-4 py-1 cursor-pointer"
             onClick={() => {
               setTypeOfQuestionRender(nestedArrConverter(state.current, true));
+              // for rendering first page
               dispatch({ type: "reset" });
+              setSortingBtnState({
+                viewCurrent: true,
+                viewMarked: false,
+                viewNotAttempted: false,
+                viewAttempted: false,
+              });
             }}
           >
             <span className="material-symbols-outlined" data-icon="play_circle">
@@ -284,7 +247,14 @@ export default function IndividualQuestionNavigations(props) {
               setTypeOfQuestionRender(
                 nestedArrConverter(state.attempted, true),
               );
+              // for rendering first page
               dispatch({ type: "reset" });
+              setSortingBtnState({
+                viewCurrent: false,
+                viewMarked: false,
+                viewNotAttempted: false,
+                viewAttempted: true,
+              });
             }}
           >
             <span
@@ -302,7 +272,14 @@ export default function IndividualQuestionNavigations(props) {
             className="flex items-center gap-3 text-secondary font-medium pl-4 py-1 cursor-pointer"
             onClick={() => {
               setTypeOfQuestionRender(nestedArrConverter(state.marked, true));
+              // for rendering first page
               dispatch({ type: "reset" });
+              setSortingBtnState({
+                viewCurrent: false,
+                viewMarked: true,
+                viewNotAttempted: false,
+                viewAttempted: false,
+              });
             }}
           >
             <span
@@ -322,7 +299,14 @@ export default function IndividualQuestionNavigations(props) {
               setTypeOfQuestionRender(
                 nestedArrConverter(state.notAttempted, true),
               );
+              // for rendering first page
               dispatch({ type: "reset" });
+              setSortingBtnState({
+                viewCurrent: false,
+                viewMarked: false,
+                viewNotAttempted: true,
+                viewAttempted: false,
+              });
             }}
           >
             <span
@@ -339,7 +323,10 @@ export default function IndividualQuestionNavigations(props) {
           <div
             className="flex items-center gap-3 text-secondary font-medium pl-4 py-1 cursor-pointer"
             onClick={() => {
-              setTypeOfQuestionRender(nestedArrConverter(questionNum));
+              setTypeOfQuestionRender(
+                nestedArrConverter(totalNumberOfQuestions),
+              );
+              // for rendering first page
               dispatch({ type: "reset" });
             }}
           >
@@ -350,7 +337,7 @@ export default function IndividualQuestionNavigations(props) {
               radio_button_unchecked
             </span>
             <span className="text-label-md font-label-md">
-              View All ({questionNum})
+              View All ({totalNumberOfQuestions})
             </span>
           </div>
         </div>
