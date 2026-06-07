@@ -17,8 +17,8 @@ export default function IndividualQuestionNavigations() {
 
 
 
-const { currentQuestion, attempted, current } = state;
-const { viewCurrent ,viewAttempted} = sortingBtnState;
+const { currentQuestion, attempted, current ,marked , notAttempted} = state;
+const { viewCurrent ,viewAttempted ,viewMarked,viewNotAttempted} = sortingBtnState;
 
 useEffect(() => {
   if (!Array.isArray(QuestionArr) || QuestionArr.length === 0) return;
@@ -36,12 +36,6 @@ useEffect(() => {
 
   function newRender(renderValue) {
     const newRender = nestedArrConverter(renderValue, true);
-
-    console.log("Type of question :",(typeOfQuestionRender))
-    console.log("Json :",JSON.stringify(typeOfQuestionRender))
-    console.log("Type of question new :",(newRender))
-    console.log("Json new :",JSON.stringify(newRender))
-
     // avoid re-setting identical render to prevent extra renders
     if (JSON.stringify(typeOfQuestionRender) !== JSON.stringify(newRender)) {
       setTypeOfQuestionRender(newRender);
@@ -49,27 +43,35 @@ useEffect(() => {
     }
   }
   
+
   if(viewCurrent){
     newRender(current)
   } else if(viewAttempted){
-    console.log("Attemted Render")
     newRender(attempted)
-
+  }else if(viewMarked){
+    newRender(marked)
+  } else if (viewNotAttempted) {
+    newRender(notAttempted)
   }
-
 
 }, [
   QuestionArr,
   currentQuestion,
   attempted,
-  current,
-  dispatch,
+  viewMarked,
+  viewNotAttempted,
   viewCurrent,
   viewAttempted,
+  notAttempted,
+  marked,
+  current,
+  dispatch,
   nestedArrConverter,
   setTypeOfQuestionRender,
   typeOfQuestionRender,
 ]);
+
+
 
   return (
     <div className="flex flex-col justify-between items-center h-screen">
@@ -114,15 +116,20 @@ useEffect(() => {
                   const isCurrent = state.current.includes(id);
                   return (
                     <div
+                      onClick={()=>{
+                        (isAttempted || isCurrent || isMarked)?
+                        dispatch({type : "navigateQuestion",navigateNum : id}) : ""
+                      }}
+                      disabled={!isAttempted || !isCurrent || !isMarked}
                       key={id}
                       className={`
                   ${
                     isMarked
-                      ? "text-on-secondary bg-error/80"
+                      ? "text-on-secondary bg-error/80 cursor-pointer"
                       : isAttempted
-                        ? "bg-blue-primary text-on-secondary"
+                        ? "bg-blue-primary text-on-secondary cursor-pointer"
                         : isCurrent
-                          ? "text-blue-primary border-blue-primary border-3 "
+                          ? "text-blue-primary border-blue-primary border-3 cursor-pointer"
                           : "text-secondary bg-surface-container-highest border-secondary border"
                   }
                   
@@ -136,7 +143,6 @@ useEffect(() => {
                   text-xl
                   text-center
                   relative
-                  cursor-pointer
                   hover:scale-105
                   hover:shadow-xl
                   active:scale-95
@@ -328,6 +334,12 @@ useEffect(() => {
               );
               // for rendering first page
               dispatch({ type: "reset" });
+              setSortingBtnState({
+                viewCurrent: false,
+                viewMarked: false,
+                viewNotAttempted: false,
+                viewAttempted: false,
+              });
             }}
           >
             <span
@@ -342,7 +354,6 @@ useEffect(() => {
           </div>
         </div>
       </div>
-
       <div className="p-6 w-full">
         <button className="w-full py-3 cursor-pointer bg-secondary text-on-secondary rounded-xl font-bold text-label-md hover:bg-on-secondary-fixed-variant transition-colors flex items-center justify-center gap-2">
           Review All Section

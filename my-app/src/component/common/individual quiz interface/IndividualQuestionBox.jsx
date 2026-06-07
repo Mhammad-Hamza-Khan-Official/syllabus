@@ -1,18 +1,16 @@
 import { useContext } from "react";
 import individualQuizBoxContext from "../../context/individualQuizBoxContext";
 export default function IndividualQuestionBox(props) {
+  const { whichSection = "Mathametics" } = props;
+
   const {
-    increaseScore = "+4",
-    decreaseScore = "-1",
-    whichSection = "Mathametics",
-  } = props;
-
-  const { selectedAnswers, setSelectedAnswers, state, QuestionArr } =
-    useContext(individualQuizBoxContext);
-
-
-
-
+    selectedAnswers,
+    setSelectedAnswers,
+    state,
+    QuestionArr,
+    positiveMarking,
+    nagetiveMarking,
+  } = useContext(individualQuizBoxContext);
 
   const handleSelect = (id) => {
     if (QuestionArr[state.currentQuestion].isMultiSelection) {
@@ -48,8 +46,14 @@ export default function IndividualQuestionBox(props) {
           </div>
           <div className="">
             Marks :{" "}
-            <span className="text-green-700 font-bold">{increaseScore}</span> /{" "}
-            <span className="text-error font-bold">{decreaseScore}</span>
+            <span className="text-green-700 font-bold">
+              {"+" + positiveMarking}
+            </span>
+            {nagetiveMarking ? (
+              <span className="text-error font-bold">
+                {"/ " + nagetiveMarking}
+              </span>
+            ) : null}
           </div>
         </div>
         <h1 className="text-4xl font-bold mb-10">
