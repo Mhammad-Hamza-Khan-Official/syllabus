@@ -6,6 +6,7 @@ import NotFound from "./component/pages/NotFound";
 import DashBoard from "./component/pages/DashBoard";
 import Categories from "./component/pages/Categories";
 import IndividualQuiz from "./component/pages/IndividualQuiz";
+import IndividualQuizReview from "./component/pages/IndividualQuizReview";
 
 
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/dashboard" element={<DashBoard/>}/>
         <Route path="/categories" element={<Categories/>}/>
         <Route path="/individualQuiz" element={<IndividualQuiz/>}/>
+        <Route path="/individualQuizReview" element={<IndividualQuizReview/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/registration" element={<Registration/>}/>
         <Route path="*" element={<NotFound/>}/>

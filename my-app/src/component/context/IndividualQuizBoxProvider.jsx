@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { useReducer,  useState } from "react";
 import IndividualQuizBoxContext from "./individualQuizBoxContext";
 
 export default function IndividualQuizBoxProvider({ children }) {
@@ -285,24 +285,24 @@ export default function IndividualQuizBoxProvider({ children }) {
 
     // 21 - 50
 
-    // ...Array.from({ length: 30 }, (_, i) => ({
-    //   questionId: i + 21,
-    //   question: "Mathematics Multiple Choice Question",
-    //   expresion: null,
-    //   isMultiSelection: false,
-    //   correctAnswer: (i % 4) + 1,
-    //   options: [
-    //     { id: 1, text: "Option A" },
-    //     { id: 2, text: "Option B" },
-    //     { id: 3, text: "Option C" },
-    //     { id: 4, text: "Option D" },
-    //   ],
-  //   })
-  // ),
+    ...Array.from({ length: 30 }, (_, i) => ({
+      questionId: i + 6,
+      question: "Mathematics Multiple Choice Question",
+      expresion: null,
+      isMultiSelection: false,
+      correctAnswer: (i % 4) + 1,
+      options: [
+        { id: 1, text: "Option A" },
+        { id: 2, text: "Option B" },
+        { id: 3, text: "Option C" },
+        { id: 4, text: "Option D" },
+      ],
+    })
+  ),
   ];
 
   
-
+const [onePageQuestionNum , setOnePageQuestionNum] = useState(10)
   const [timerState , setTimerState] = useState({
     isStart : true,
     isPause : false,
@@ -414,8 +414,8 @@ export default function IndividualQuizBoxProvider({ children }) {
   function nestedArrConverter(
     totalNumberOfQuestionsORarray = 0,
     isArr = false,
+    onePageQuestions = onePageQuestionNum
   ) {
-    const onePageQuestions = 10;
     if (isArr) {
       const totalIds = totalNumberOfQuestionsORarray.length;
       const numberOfPages = Math.ceil(totalIds / onePageQuestions);
@@ -425,12 +425,11 @@ export default function IndividualQuizBoxProvider({ children }) {
         nestedArr.push([]);
       } 
 
-      
       let num = 0;
 
       for (let index = 0; index < totalIds; index++) {
         nestedArr[num].push(totalNumberOfQuestionsORarray[index]);
-        if (nestedArr[num].length === 10) {
+        if (nestedArr[num].length === onePageQuestionNum) {
           num++;
         }
       }
@@ -441,7 +440,9 @@ export default function IndividualQuizBoxProvider({ children }) {
       };
     } else {
       const totalIds = totalNumberOfQuestionsORarray;
-      const numberOfPages = Math.ceil(totalIds / onePageQuestions);
+      const numberOfPages = Math.ceil(totalIds /onePageQuestions);
+      console.log("number of pages :",numberOfPages)
+      console.log("number of Question one Page :",onePageQuestions)
 
       let nestedArr = [];
 
@@ -449,12 +450,14 @@ export default function IndividualQuizBoxProvider({ children }) {
         nestedArr.push([]);
       }
 
+      console.log("nested Arr :",nestedArr)
+
       let num = 0;
 
       for (let index = 1; index <= totalIds; index++) {
         nestedArr[num].push(index);
 
-        if (nestedArr[num].length === 10) {
+        if (nestedArr[num].length === onePageQuestions) {
           num++;
         }
       }
@@ -466,6 +469,7 @@ export default function IndividualQuizBoxProvider({ children }) {
       };
     }
   }
+
 
   function nextQuestionsHandle() {
     setSelectedAnswers([]);
@@ -550,6 +554,7 @@ export default function IndividualQuizBoxProvider({ children }) {
           selectedAnswers,
           setSelectedAnswers,
           state,
+          setOnePageQuestionNum,
           dispatch,
           QuestionArr,
           totalNumberOfQuestions,

@@ -16,6 +16,7 @@ export default function IndividualSideNavigation() {
             Mathematics Section
           </p>
         </div>
+        
         <IndividualQuestionNavigations />
         
       </div>

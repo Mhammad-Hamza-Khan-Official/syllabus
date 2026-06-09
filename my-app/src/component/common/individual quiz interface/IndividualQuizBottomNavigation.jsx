@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import individualQuizBoxContext from "../../context/individualQuizBoxContext";
 
 export default function IndividualQuizBottomNavigation() {
@@ -16,8 +16,22 @@ export default function IndividualQuizBottomNavigation() {
       ? false
       : true;
 
-      const currentQuestionNumber = QuestionArr[state.currentQuestion].questionId
+  const currentQuestionNumber = QuestionArr[state.currentQuestion].questionId;
 
+  useEffect(() => {
+    const testSubmitBtn = document.getElementById("IndividualQuizSubmitBtn");
+    if (
+      state.attempted.length === totalNumberOfQuestions - 1 &&
+      localStorage.getItem(totalNumberOfQuestions) !== null
+    ) {
+      testSubmitBtn.disabled = false;
+      testSubmitBtn.addEventListener("click", () => {
+        dispatch({ type: "testSubmit" });
+        testSubmitHandle();
+        console.log("Click");
+      });
+    }
+  });
 
   return (
     <div>
@@ -40,18 +54,11 @@ export default function IndividualQuizBottomNavigation() {
             <button
               className="disabled:text-on-surface-variant disabled:bg-transparent flex items-center gap-2 px-6 py-2 hover:opacity-80 transition-all rounded-xl active:scale-95
             border disabled:cursor-auto cursor-pointer bg-tertiary-container text-on-tertiary"
-            onClick={()=>{
-              dispatch({type : "marked", id : currentQuestionNumber})
+              onClick={() => {
+                dispatch({ type: "marked", id: currentQuestionNumber });
               }}
-              disabled={
-                state.currentQuestion + 1 >= totalNumberOfQuestions ||
-                isNotableToNext
-              }
             >
-              <span
-                className="material-symbols-outlined "
-                data-icon="flag"
-              >
+              <span className="material-symbols-outlined " data-icon="flag">
                 flag
               </span>
               <span className="text-label-sm font-label-sm font-semibold">
@@ -65,7 +72,6 @@ export default function IndividualQuizBottomNavigation() {
             disabled:bg-inherit disabled:text-blue-primary disabled:cursor-auto border-2 border-transparent disabled:border-blue-primary  font-bold"
               onClick={() => {
                 nextQuestionsHandle();
-
               }}
               disabled={
                 state.currentQuestion + 1 >= totalNumberOfQuestions ||
@@ -82,11 +88,8 @@ export default function IndividualQuizBottomNavigation() {
             </button>
             <button
               className={`bg-success disabled:bg-inherit disabled:cursor-auto disabled:text-blue-primary disabled:border-blue-primary text-on-error rounded-xl px-8 py-2 flex items-center border-2 gap-2 active:scale-95 transition-transform font-bold shadow-lg ml-8 cursor-pointer`}
-              onClick={() => {
-                dispatch({ type: "testSubmit" });
-                testSubmitHandle();
-              }}
-              disabled={!(state.attempted.length === totalNumberOfQuestions -1) || localStorage.getItem(totalNumberOfQuestions) === null}
+              disabled={true}
+              id="IndividualQuizSubmitBtn"
             >
               <span className="text-label-sm font-label-sm">Submit Test</span>
               <span className="material-symbols-outlined" data-icon="task_alt">
