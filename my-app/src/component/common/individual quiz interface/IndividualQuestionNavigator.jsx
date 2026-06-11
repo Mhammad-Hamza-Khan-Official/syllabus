@@ -4,8 +4,11 @@ export default function IndividualQuestionNavigator({
   state,
   typeOfQuestionRender,
   dispatch,
+  isReview = false
 }) {
   
+
+
   return (
     <> 
     <div className="flex justify-center">
@@ -14,7 +17,7 @@ export default function IndividualQuestionNavigator({
       <div className="overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
-            key={state.page}
+            key={state.page} 
             initial={{
               x: state.direction === 1 ? -120 : 120,
               opacity: 0,
@@ -52,21 +55,22 @@ export default function IndividualQuestionNavigator({
                 return (
                   <div
                     onClick={() => {
-                      isAttempted || isCurrent || isMarked
+                      isAttempted || isCurrent || isMarked || isReview
                         ? dispatch({
                             type: "navigateQuestion",
                             navigateNum: id,
                           })
                         : "";
                     }}
-                    disabled={!isAttempted || !isCurrent || !isMarked}
+                    disabled={!isAttempted || !isCurrent || !isMarked || !isReview}
                     key={id}
                     className={`
                   ${
                     isMarked
                       ? "text-on-secondary bg-error/80 cursor-pointer"
                       : isAttempted
-                        ? "bg-blue-primary text-on-secondary cursor-pointer"
+                        ? "bg-blue-primary text-on-secondary cursor-pointer":
+                        isReview ? "text-secondary bg-surface-container-highest border-secondary border cursor-pointer"
                         : isCurrent
                           ? "text-blue-primary border-blue-primary border-3 cursor-pointer"
                           : "text-secondary bg-surface-container-highest border-secondary border"

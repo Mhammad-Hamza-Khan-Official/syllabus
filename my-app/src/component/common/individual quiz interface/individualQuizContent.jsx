@@ -1,7 +1,10 @@
 import IndividualQuestionBox from "./IndividualQuestionBox";
 import IndividualSideNavigation from "./IndividualSideNavigation";
 
+
 export default function individualQuizContent() {
+
+
   return (
     <>
 

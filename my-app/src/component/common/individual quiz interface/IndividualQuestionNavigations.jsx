@@ -71,7 +71,6 @@ useEffect(() => {
   typeOfQuestionRender,
 ]);
 
-
   return (
     <div className="flex flex-col justify-between items-center h-screen">
       <div className="w-full">

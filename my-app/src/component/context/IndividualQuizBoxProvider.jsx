@@ -1,4 +1,4 @@
-import { useReducer,  useState } from "react";
+import { useReducer, useState } from "react";
 import IndividualQuizBoxContext from "./individualQuizBoxContext";
 
 export default function IndividualQuizBoxProvider({ children }) {
@@ -285,31 +285,29 @@ export default function IndividualQuizBoxProvider({ children }) {
 
     // 21 - 50
 
-    ...Array.from({ length: 30 }, (_, i) => ({
-      questionId: i + 6,
-      question: "Mathematics Multiple Choice Question",
-      expresion: null,
-      isMultiSelection: false,
-      correctAnswer: (i % 4) + 1,
-      options: [
-        { id: 1, text: "Option A" },
-        { id: 2, text: "Option B" },
-        { id: 3, text: "Option C" },
-        { id: 4, text: "Option D" },
-      ],
-    })
-  ),
+    //   ...Array.from({ length: 30 }, (_, i) => ({
+    //     questionId: i + 6,
+    //     question: "Mathematics Multiple Choice Question",
+    //     expresion: null,
+    //     isMultiSelection: false,
+    //     correctAnswer: (i % 4) + 1,
+    //     options: [
+    //       { id: 1, text: "Option A" },
+    //       { id: 2, text: "Option B" },
+    //       { id: 3, text: "Option C" },
+    //       { id: 4, text: "Option D" },
+    //     ],
+    //   })
+    // ),
   ];
 
-  
-const [onePageQuestionNum , setOnePageQuestionNum] = useState(10)
-  const [timerState , setTimerState] = useState({
-    isStart : true,
-    isPause : false,
-    timerLimit : 1,
-    totalTimeInSec : 0
-  })
-  const [nagetiveMarking, positiveMarking] = [-1, +4 ];
+  const [timerState, setTimerState] = useState({
+    isStart: true,
+    isPause: false,
+    timerLimit: 1,
+    totalTimeInSec: 0,
+  });
+  const [nagetiveMarking, positiveMarking] = [-1, +4];
   const totalNumberOfQuestions = QuestionArr.length;
 
   const NotAttempted = [];
@@ -414,7 +412,7 @@ const [onePageQuestionNum , setOnePageQuestionNum] = useState(10)
   function nestedArrConverter(
     totalNumberOfQuestionsORarray = 0,
     isArr = false,
-    onePageQuestions = onePageQuestionNum
+    onePageQuestions = 10,
   ) {
     if (isArr) {
       const totalIds = totalNumberOfQuestionsORarray.length;
@@ -423,13 +421,13 @@ const [onePageQuestionNum , setOnePageQuestionNum] = useState(10)
       let nestedArr = [];
       for (let index = 0; index < numberOfPages; index++) {
         nestedArr.push([]);
-      } 
+      }
 
       let num = 0;
 
       for (let index = 0; index < totalIds; index++) {
         nestedArr[num].push(totalNumberOfQuestionsORarray[index]);
-        if (nestedArr[num].length === onePageQuestionNum) {
+        if (nestedArr[num].length === onePageQuestions) {
           num++;
         }
       }
@@ -440,17 +438,13 @@ const [onePageQuestionNum , setOnePageQuestionNum] = useState(10)
       };
     } else {
       const totalIds = totalNumberOfQuestionsORarray;
-      const numberOfPages = Math.ceil(totalIds /onePageQuestions);
-      console.log("number of pages :",numberOfPages)
-      console.log("number of Question one Page :",onePageQuestions)
+      const numberOfPages = Math.ceil(totalIds / onePageQuestions);
 
       let nestedArr = [];
 
       for (let index = 1; index <= numberOfPages; index++) {
         nestedArr.push([]);
       }
-
-      console.log("nested Arr :",nestedArr)
 
       let num = 0;
 
@@ -470,7 +464,6 @@ const [onePageQuestionNum , setOnePageQuestionNum] = useState(10)
     }
   }
 
-
   function nextQuestionsHandle() {
     setSelectedAnswers([]);
     dispatch({ type: "next" });
@@ -483,14 +476,20 @@ const [onePageQuestionNum , setOnePageQuestionNum] = useState(10)
   function ScoreCalculator() {
     const CorrectAnswers = [];
     const WrongAnswers = [];
+    
+
     for (const key in localStorage) {
       let isCorrect = false;
 
       //Prevent to pass null value
       if (localStorage.getItem(key) === null) continue;
+      //prevent to pass charters
+      if (isNaN(Number(key))) continue;
+
       //split for converting into arr
       const userAnswers = localStorage.getItem([key]).split(" ");
       let correctAns = QuestionArr[key - 1].correctAnswer;
+      // const selectedOptions = localStorage.getItem([key]).split(" ")
 
       // Convert  into Arr
       //its mean it is it is number
@@ -502,51 +501,66 @@ const [onePageQuestionNum , setOnePageQuestionNum] = useState(10)
         correctAns = correctAns.split(" ");
       }
 
-
       for (const correctValue of correctAns) {
         for (const userValue of userAnswers) {
           if (correctValue == userValue) {
-            isCorrect = true
-            break;
-          }else{
-            isCorrect = false
+            isCorrect = true;
+          } else {
+            isCorrect = false;
           }
         }
       }
 
       if (isCorrect) {
-        CorrectAnswers.push(key);
+        CorrectAnswers.push({
+          QuestionNum :key,
+          Answers :userAnswers
+        });
       } else if (!isCorrect) {
-        WrongAnswers.push(key);
+        WrongAnswers.push({
+          QuestionNum : key,
+          wrongAns : userAnswers,
+          correctAns : correctAns
+        });
       }
     }
 
-    const positiveScore = CorrectAnswers.length * positiveMarking
-    const nagetiveScore = WrongAnswers.length * nagetiveMarking
-    let Score = positiveScore + nagetiveMarking
-
+    const positiveScore = CorrectAnswers.length * positiveMarking;
+    const nagetiveScore = WrongAnswers.length * nagetiveMarking;
+    let Score = positiveScore + nagetiveMarking;
 
     return {
       CorrectAnswers,
       WrongAnswers,
       positiveScore,
       nagetiveScore,
-      Score
+      Score,
     };
   }
 
-
-  const Score = []
   function testSubmitHandle() {
-    
-    Score.push(ScoreCalculator())
-    console.log(Score)
+    const Result = ScoreCalculator();
     setTimerState({
       ...timerState,
-      isStart : false
-    })
-    localStorage.clear();
+      isStart: false,
+    });
+
+    setTimeout(() => {
+      localStorage.clear(); // Remove all Storage
+      //Save Result
+
+      localStorage.setItem("CorrectAns", Result.CorrectAnswers.map((e)=>JSON.stringify(e)).join(" "));
+      localStorage.setItem("WrongAns", Result.WrongAnswers.map((e)=>JSON.stringify(e)).join(" "));
+      localStorage.setItem("Score", Result.Score.toString());
+      localStorage.setItem("nagetiveScore", Result.nagetiveScore.toString());
+      localStorage.setItem("positiveScore", Result.positiveScore.toString());
+      window.location.pathname = "individualQuizReview";
+    }, 1500);
+
+
+    
   }
+
   return (
     <>
       <IndividualQuizBoxContext.Provider
@@ -554,7 +568,6 @@ const [onePageQuestionNum , setOnePageQuestionNum] = useState(10)
           selectedAnswers,
           setSelectedAnswers,
           state,
-          setOnePageQuestionNum,
           dispatch,
           QuestionArr,
           totalNumberOfQuestions,
@@ -567,9 +580,8 @@ const [onePageQuestionNum , setOnePageQuestionNum] = useState(10)
           testSubmitHandle,
           nagetiveMarking,
           positiveMarking,
-          Score : Score[0],
           timerState,
-          setTimerState ,       
+          setTimerState,
         }}
       >
         {children}
