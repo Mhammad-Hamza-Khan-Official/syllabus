@@ -1,0 +1,7 @@
+div{
+    list-style-type: lower-alpha;
+}
+
+*{
+    scroll-behavior: smooth;
+}
