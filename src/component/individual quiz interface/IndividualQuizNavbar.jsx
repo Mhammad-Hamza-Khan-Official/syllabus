@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import Timer from "../Timer";
+import Timer from "../common/Timer";
 import individualQuizBoxContext from "../../context/individualQuizBoxContext";
 
 export default function IndividualQuizNavbar() {

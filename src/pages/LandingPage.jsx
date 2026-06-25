@@ -1,6 +1,6 @@
 import LandingPageLayout from "../layouts/LandingPageLayout";
 
-export default function LangingPage() {
+export default function LandingPage() {
   return (
     <div>
       <LandingPageLayout/>

@@ -8,7 +8,7 @@ export default function DSidebar() {
         className="fixed top-0 left-0  bg-on-secondary   w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 z-50"
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-neutral-primary-soft border-e flex flex-col justify-between  border-default">
+        <div className="h-full px-3 py-4 overflow-y-auto bg-neutral-primary-soft  flex flex-col justify-between  ">
           <div className="flex items-center ps-5.5 mt-4 mb-5 ">
             <span className="self-center   text-heading font-semibold whitespace-nowrap">
               <h1 className="text-3xl font-bold tracking-wider text-blue-primary">

@@ -2,9 +2,10 @@ import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import InputInlineError from "../common/InputInlineError";
 import { useNavigate } from "react-router-dom";
-import PasswordFeild from "../landingPage/PasswordFeild";
+import PasswordFeild from "../common/PasswordFeild";
 import SubmitBtn from "../common/SubmitBtn";
 import { useState } from "react";
+
 
 export default function RegistrationContent() {
   //React Hook form
@@ -14,8 +15,10 @@ export default function RegistrationContent() {
 
   const onSubmit = async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+await new Promise((resolve) => setTimeout(resolve, 2000));
       console.log(data);
+
+
     } catch (error) {
       console.log(error);
     }

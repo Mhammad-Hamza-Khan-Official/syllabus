@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
-import Footer from "../common/Footer";
-import Navbar from "../common/Navbar";
+import Footer from "../component/landingPage/Footer";
+import Navbar from "../component/landingPage/Navbar";
 
 export default function NotFound() {
   return <div>
@@ -15,7 +15,6 @@ export default function NotFound() {
         </Link>
     </div>
     <footer className="fixed bottom-0 flex justify-center">
-
     <Footer/>
     </footer>
   </div>;

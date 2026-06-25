@@ -1,7 +1,8 @@
-import IndividualQuizBottomNavigation from "../common/individual quiz interface/IndividualQuizBottomNavigation";
-import IndividualQuizContent from "../common/individual quiz interface/individualQuizContent";
-import IndividualQuizNavbar from "../common/individual quiz interface/IndividualQuizNavbar";
+import IndividualQuizBottomNavigation from "../component/individual quiz interface/IndividualQuizBottomNavigation";
+import IndividualQuizContent from "../component/individual quiz interface/individualQuizContent";
+import IndividualQuizNavbar from "../component/individual quiz interface/IndividualQuizNavbar";
 import IndividualQuizBoxProvider from "../context/IndividualQuizBoxProvider";
+
 
 export default function IndividualQuizInterfaceLayout() {
   return (

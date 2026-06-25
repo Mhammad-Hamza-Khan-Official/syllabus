@@ -1,6 +1,6 @@
-import CategoriesContent from "../common/categories/CategoriesContent";
-import DNavbar from "../common/dashboard/DNavbar";
-import DSidebar from "../common/dashboard/DSidebar";
+import CategoriesContent from "../component/categories/CategoriesContent";
+import DNavbar from "../component/dashboard/DNavbar";
+import DSidebar from "../component/dashboard/DSidebar";
 
 export default function CategoriesLayout() {
   return (

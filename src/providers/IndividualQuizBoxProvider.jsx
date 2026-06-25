@@ -1,5 +1,5 @@
 import { useReducer, useState } from "react";
-import IndividualQuizBoxContext from "./individualQuizBoxContext";
+import IndividualQuizBoxContext from "../context/individualQuizBoxContext";
 // import { createAttempt } from "../../services/ResultService";
 
 export default function IndividualQuizBoxProvider({ children }) {

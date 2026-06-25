@@ -4,31 +4,47 @@ import InputInlineError from "../common/InputInlineError";
 import { DevTool } from "@hookform/devtools";
 import { useForm } from "react-hook-form";
 import SubmitBtn from "../common/SubmitBtn";
-import PasswordFeild from "../landingPage/PasswordFeild";
+import PasswordFeild from "../common/PasswordFeild";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../server/config/firebaseConfig";
+import useAuth from "../../hooks/useAuth";
+
 
 export default function LoginContent() {
   //React Hook form
-  const { register, handleSubmit, control, formState } = useForm({
-    mode:"onBlur"
+  const { register, handleSubmit, control, formState,setError } = useForm({
+    mode: "onBlur",
   });
   const { errors, isSubmitting } = formState;
   const navigate = useNavigate();
+  const {dispatch,state} = useAuth()
 
-  const onSubmit = async (data) => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const onSubmit = async (data) => {
+  try {
+    await signInWithEmailAndPassword(
+      auth,
+      data.email,
+      data.password
+    );
+
+    dispatch({type:"LOGIN",payload : data.email})
+    console.log("State :",state)
+    navigate("/dashboard");
+  } catch (error) {
+    setError("email", {
+      type: "manual",
+      message: "Invalid email or password",
+    });
+    console.log(error)
+  }
+};
 
   return (
     <>
-      <div className="flex flex-col h-screen items-center justify-center px-6 py-8 mx-auto  lg:py-0">
+      <div className="flex flex-col @max-3xl:h-screen items-center justify-center px-6 py-8 md:px-0 mx-auto  lg:py-0">
         <div
-          className="w-full bg-on-secondary   rounded-2xl shadow dark:border  
-      sm:max-w-lg xl:p-0  my-3"
+          className="w-full bg-on-secondary my-10 rounded-2xl shadow dark:border  
+      sm:max-w-lg xl:p-0 "
         >
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8 ">
             <div className="text-center flex flex-col items-center justify-center gap-">
@@ -71,15 +87,7 @@ export default function LoginContent() {
                         value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                         message: "Invalid email address",
                       },
-                      validate: {
-                        available: (value) => {
-                          const availableEmail = "hamza@gmail.com";
-                          return (
-                            value === availableEmail ||
-                            `Email is not exist. Please Register.`
-                          );
-                        },
-                      },
+                      
                     })}
                   />
                   <div className="error ab    h-6 flex items-center">
@@ -104,7 +112,7 @@ export default function LoginContent() {
                 </div>
               </div>
               {/* Password */}
-              <PasswordFeild errors={errors} register={register}/>
+              <PasswordFeild errors={errors} register={register} />
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
